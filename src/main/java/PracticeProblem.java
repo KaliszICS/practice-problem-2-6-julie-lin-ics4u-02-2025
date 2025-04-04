@@ -1,84 +1,89 @@
-import java.util.Arrays;
-
 public class PracticeProblem {
 	
 	public static void main(String args[]) {
-
 	}
 	// Question 1
 	public static int[] bubbleSort(double[] nums) {
-		double [] arr = Arrays.copyOf(nums, nums.length); // to copy the array
 		int swaps = 0; // for swap count
 		int steps = 0; // for iterations count
 		
 		boolean swapped = true;
 
-		for (int i = 0; i < arr.length - 1 && swapped; i++){
+		for (int i = 0; i < nums.length && swapped; i++){
 			swapped = false; 
-			for (int j = 0; j < arr.length - i - 1; j++){
-				steps++;
-				if (arr[j] > arr [j + 1]){
-					double temp = arr [j];
-					arr[j] = arr [j + 1];
-					arr[j + 1] = temp;
+			for (int j = 0; j < nums.length - i - 1; j++){
+				if (nums[j] > nums [j + 1]){
+					double temp = nums [j];
+					nums[j] = nums[j + 1];
+					nums[j + 1] = temp;
 					swaps+= 3;
 					swapped = true;
 				}
+				steps++;
 			}
 			if (!swapped){
-				i = arr.length;
+				//i = nums.length;
+				break;
 			}
 		}
 		return new int[] {swaps, steps}; 
 	}
 	public static int[] selectionSort(double[] nums) {
-		double [] arr = Arrays.copyOf(nums, nums.length);
 
 		int swaps = 0; // for swap count
 		int steps = 0; // for iterations count
 
-		for (int i = 1; i < arr.length; i++){
+		for (int i = 0; i < nums.length - 1; i++){
 			int minIndex = i;
-			for (int j = 0; j < arr.length; j++){
-				steps++;
-				if (arr[j] < arr[minIndex]) {
+			for (int j = i+1; j < nums.length; j++){
+				if (nums[j] < nums[minIndex]) {
 					minIndex = j;
+					swaps++;
 				}
-			
-				double temp = arr[j];
-				arr[j] = arr [j + 1];
-				arr [j + 1] = temp;
-				swaps += 3;
+				steps++;
 			}
+				double temp = nums[i];
+				nums[i] = nums [minIndex];
+				nums [minIndex] = temp;
+				swaps += 3;
 		}
 		return new int[] {swaps, steps}; 
 	}
 	public static int[] insertionSort(double[] nums) {
-		double [] arr = Arrays.copyOf(nums, nums.length);
 
 		int swaps = 0; // for swap count
 		int steps = 0; // for iterations count
 
-		for (int i = 1; i < arr.length; i++){
-			double key = arr[i];
+		for (int i = 1; i < nums.length; i++){
+			double key = nums[i];
 			int j = i - 1;
-
-			while (j >= 0 && arr[j] > key) {
+			swaps++;
+			while (j >= 0 && key < nums[j]) {
 				steps++;
-				arr [j + 1] = arr [j];
+				nums [j + 1] = nums [j];
 				swaps++;
 				j--;
 			}
-			arr[j + 1] = key;
+			nums[j + 1] = key;
 			swaps++; 
  		}
 		return new int[] {swaps, steps}; 
 	}
 	// Question 2
 	public static String leastSwaps(double[] nums) {
-		int [] bubbleSwaps = bubbleSort(nums);
-		int [] selectionSwaps = selectionSort(nums);
-		int [] insertionSwaps = insertionSort(nums);
+		double[] nums1 = new double[nums.length];
+		double[] nums2 = new double[nums.length];
+		double[] nums3 = new double[nums.length];
+
+		for(int i = 0; i < nums.length; i++){
+			nums1[i] = nums[i];
+			nums2[i] = nums[i];
+			nums3[i] = nums[i];
+		}
+
+		int [] bubbleSwaps = bubbleSort(nums1);
+		int [] selectionSwaps = selectionSort(nums2);
+		int [] insertionSwaps = insertionSort(nums3);
 
 		int minSwaps = Math.min(bubbleSwaps[0], Math.min(selectionSwaps[0], insertionSwaps[0]));
 		
@@ -95,9 +100,19 @@ public class PracticeProblem {
 	}
 	// Question 3
 	public static String leastIterations(double[] nums) {
-		int [] bubbleSteps = bubbleSort(nums);
-		int [] selectionSteps = selectionSort(nums);
-		int [] insertionSteps = insertionSort(nums);
+		double[] nums1 = new double[nums.length];
+		double[] nums2 = new double[nums.length];
+		double[] nums3 = new double[nums.length];
+
+		for(int i = 0; i < nums.length; i++){
+			nums1[i] = nums[i];
+			nums2[i] = nums[i];
+			nums3[i] = nums[i];
+		}
+
+		int [] bubbleSteps = bubbleSort(nums1);
+		int [] selectionSteps = selectionSort(nums2);
+		int [] insertionSteps = insertionSort(nums3);
 
 		int minSteps = Math.min(bubbleSteps[1], Math.min(selectionSteps[1], insertionSteps[1]));
 		
